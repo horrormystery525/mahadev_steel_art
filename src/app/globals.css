@@ -1,26 +1,104 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #F7F7F5;
+  --foreground: #111111;
+  --secondary: #6B6B6B;
+  --panel: #F3F2EF;
+  --card: #FCFCFB;
+  --border: #E7E7E4;
+
+  --font-sans: "Geist", "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-devanagari: "Noto Sans Devanagari", sans-serif;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.dark {
+  --background: #111113;
+  --foreground: #F4F4F5;
+  --secondary: #A1A1AA;
+  --panel: #1A1A1E;
+  --card: #1A1A1E;
+  --border: #2A2A30;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* Typography wrapping optimizations per modern-web-guidance */
+h1, h2, h3, h4, h5, h6 {
+  text-wrap: balance;
+  letter-spacing: -0.03em;
+}
+
+p, blockquote, li {
+  text-wrap: pretty;
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+.font-devanagari {
+  font-family: var(--font-devanagari);
+}
+
+/* Modal containment per modern-web-guidance */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+  background: rgba(17, 17, 17, 0.75);
+  backdrop-filter: blur(8px);
+}
+
+/* Infinite Marquee */
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  animation: marquee 35s linear infinite;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: #D5D5D1;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #333338;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #B5B5B0;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #4A4A52;
 }
